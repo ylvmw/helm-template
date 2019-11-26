@@ -3,7 +3,10 @@ kind: Service
 metadata:
   name: {{ include "spring-with-postgres.fullname" . }}
   labels:
-{{ include "spring-with-postgres.labels" . | indent 4 }}
+    app.kubernetes.io/name: {{ include "spring-with-postgres.name" . }}
+    helm.sh/chart: {{ include "spring-with-postgres.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:

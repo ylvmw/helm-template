@@ -16,6 +16,6 @@ The following tables lists the configurable parameters of the spring-with-postgr
 |----------------------------------|---------------------------------------------------------|--------------------------------------------------------------|
 | `image.repository`               | Docker image name                                       | `spring-with-postgres:latest`          |
 | `service.type`                   | Service type                                            | `NodePort`                                                   |
-| `postgresql.postgresqlDatabase`  | database name                                           | `user`                                                       |
+| `postgresql.postgresqlDatabase`  | database name                                           | `spring-with-postgres`                                                       |
 | `postgresql.postgresqlUsername`  | database user                                           | `postgres`                                                   |
 | `postgresql.postgresqlPassword`  | database password                                       | `password`                                                   |

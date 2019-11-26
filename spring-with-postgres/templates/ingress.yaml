@@ -5,7 +5,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "spring-with-postgres.labels" . | indent 4 }}
+    app.kubernetes.io/name: {{ include "spring-with-postgres.name" . }}
+    helm.sh/chart: {{ include "spring-with-postgres.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

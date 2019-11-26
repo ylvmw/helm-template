@@ -3,7 +3,10 @@ kind: Deployment
 metadata:
   name: {{ include "spring-with-postgres.fullname" . }}
   labels:
-{{ include "spring-with-postgres.labels" . | indent 4 }}
+    app.kubernetes.io/name: {{ include "spring-with-postgres.name" . }}
+    helm.sh/chart: {{ include "spring-with-postgres.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,10 +19,6 @@ spec:
         app.kubernetes.io/name: {{ include "spring-with-postgres.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -44,7 +43,7 @@ spec:
           - name: spring.datasource.username
             value: {{ .Values.postgresql.postgresqlUsername }}
           - name: spring.datasource.password
-            value: {{ .Values.postgresql.postgresqlPassword }}          
+            value: {{ .Values.postgresql.postgresqlPassword }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
