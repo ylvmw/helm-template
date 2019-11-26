@@ -6,6 +6,19 @@ image:
   tag: latest
   pullPolicy: Always
 
+ingress:
+  enabled: false
+
 service:
   type: NodePort
   port: 8080
+
+postgresql:
+  fullnameOverride: postgres
+  postgresqlDatabase: spring-with-postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: password
+  service:
+    port: 5432
+  persistence:
+    enabled: false
