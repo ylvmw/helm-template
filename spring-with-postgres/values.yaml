@@ -2,23 +2,10 @@ replicaCount: 1
 
 image:
   registry: docker.io
-  repository: spring-app
+  repository: spring-with-postgres
   tag: latest
   pullPolicy: Always
 
-nameOverride: ""
-fullnameOverride: ""
-
 service:
   type: NodePort
-  port: 80
-
-postgresql:
-  fullnameOverride: postgres
-  postgresqlDatabase: user
-  postgresqlUsername: postgres
-  postgresqlPassword: password
-  service:
-    port: 5432
-  persistence:
-    enabled: false
+  port: 8080

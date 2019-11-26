@@ -1,20 +1,20 @@
-# {app.name}
+# spring-with-postgres
 
-The helm chart of {app.name}.
+The helm chart of spring-with-postgres.
 
 ## TL;DR
 
 ```bash
-$ helm install {app.name}
+$ helm install spring-with-postgres
 ```
 
 ## Configuration
 
-The following tables lists the configurable parameters of the {app.name} chart and their default values.
+The following tables lists the configurable parameters of the spring-with-postgres chart and their default values.
 
 | Parameter                        | Description                                             | Default                                                      |
 |----------------------------------|---------------------------------------------------------|--------------------------------------------------------------|
-| `image.repository`               | Docker image name                                       | `{app.name}:latest`                                       |
+| `image.repository`               | Docker image name                                       | `spring-with-postgres:latest`          |
 | `service.type`                   | Service type                                            | `NodePort`                                                   |
 | `postgresql.postgresqlDatabase`  | database name                                           | `user`                                                       |
 | `postgresql.postgresqlUsername`  | database user                                           | `postgres`                                                   |
