@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: spring-with-mongodb
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 8080
+
+ingress:
+  enabled: false
+
+mongodb:
+  persistence:
+    enabled: false
+  mongodbUsername: username
+  mongodbPassword: password
+  mongodbDatabase: spring-with-mongodb
+  service:
+    type: ClusterIP
+    port: 27017

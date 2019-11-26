@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "spring-with-mongodb.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "spring-with-mongodb.name" . }}
+    helm.sh/chart: {{ include "spring-with-mongodb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "spring-with-mongodb.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "spring-with-mongodb.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: spring.data.mongodb.host
+              value: "{{ template "spring-with-mongodb.mongodb.fullname" . }}"
+            - name: spring.data.mongodb.port
+              value: "{{ .Values.mongodb.service.port }}"
+            - name: spring.data.mongodb.database
+              value: "{{ .Values.mongodb.mongodbDatabase }}"
+            - name: spring.data.mongodb.username
+              value: "{{ .Values.mongodb.mongodbUsername }}"
+            - name: spring.data.mongodb.password
+              value: "{{ .Values.mongodb.mongodbPassword }}"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
